@@ -2,6 +2,7 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const packageJson = require('../package.json');
+const { DefinePlugin } = require('webpack');
 
 const commonConfig = require('./webpack.common');
 
@@ -12,9 +13,15 @@ const devConfig = {
     },
     devServer: {
         port: 8081,
-        historyApiFallback: true
+        historyApiFallback: true,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        }
     },
     plugins: [
+        new DefinePlugin({
+            APP_MODE: JSON.stringify("local"),
+        }),
         new ModuleFederationPlugin({
             name: 'marketing',
             filename: 'remoteEntry.js',
