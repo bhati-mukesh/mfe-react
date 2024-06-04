@@ -9,6 +9,7 @@ const prodConfig = {
     mode: 'production',
     output: {
         filename: '[name].[contenthash].js',
+        chunkFilename: '[contenthash].[name].js',
     },
     plugins: [
         new ModuleFederationPlugin({
